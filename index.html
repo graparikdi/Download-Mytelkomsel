@@ -3,27 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mengarahkan ke MyTelkomsel...</title>
+  <title>Download MyTelkomsel</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-align: center;
+      padding: 40px 20px;
+      background-color: #f8f9fa;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #ed0226;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h3>Mengarahkan ke Toko Aplikasi...</h3>
+  <p>Jika halaman tidak terbuka otomatis, ketuk tombol di bawah:</p>
+  <a id="download-btn" class="btn" href="https://www.telkomsel.com">Buka Aplikasi</a>
+
   <script>
     (function() {
       var ua = navigator.userAgent || navigator.vendor || window.opera;
-      
-      // Jika pengguna iPhone / iPad
+      var iosLink = "itms-apps://itunes.apple.com/app/id651412430";
+      var fallbackIos = "https://apps.apple.com/id/app/mytelkomsel/id651412430?l=id";
+      var androidLink = "https://play.google.com/store/apps/details?id=com.telkomsel.telkomselcm";
+      var btn = document.getElementById("download-btn");
+
+      // Deteksi iOS (iPhone / iPad)
       if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
-        window.location.replace("https://apps.apple.com/app/mytelkomsel/id651516146");
+        btn.href = fallbackIos;
+        window.location.href = iosLink;
+        setTimeout(function() {
+          window.location.href = fallbackIos;
+        }, 800);
       } 
-      // Jika pengguna Android
+      // Deteksi Android
       else if (/android/i.test(ua)) {
-        window.location.replace("https://play.google.com/store/apps/details?id=com.telkomsel.telkomselcm");
+        btn.href = androidLink;
+        window.location.replace(androidLink);
       } 
-      // Jika dibuka dari Laptop / PC Desktop
+      // Laptop / PC
       else {
-        window.location.replace("https://www.telkomsel.com");
+        btn.href = "https://www.telkomsel.com";
       }
     })();
   </script>
-</head>
-<body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
-  <p>Mengarahkan ke toko aplikasi...</p>
 </body>
 </html>
